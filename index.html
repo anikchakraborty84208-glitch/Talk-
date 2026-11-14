@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trade Probability Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Market risk intelligence</p>
+          <h1>Trade Probability Analyzer</h1>
+        </div>
+        <button id="loadSampleBtn" class="primary-btn">Load sample data</button>
+      </header>
+
+      <section class="panel controls-panel">
+        <div class="input-group">
+          <label for="csvFile">Upload trade CSV</label>
+          <input id="csvFile" type="file" accept=".csv,text/csv" />
+        </div>
+
+        <div class="input-group compact">
+          <label for="profitTarget">Target profit %</label>
+          <input id="profitTarget" type="number" value="3" min="0" step="0.1" />
+        </div>
+
+        <div class="input-group compact">
+          <label for="lossLimit">Stop loss %</label>
+          <input id="lossLimit" type="number" value="-2" max="0" step="0.1" />
+        </div>
+
+        <div class="input-group compact">
+          <label for="simTrades">Simulation trades</label>
+          <input id="simTrades" type="number" value="30" min="1" max="500" />
+        </div>
+      </section>
+
+      <main class="dashboard">
+        <section class="metric-grid">
+          <article class="metric-card accent-blue">
+            <span>Total trades</span>
+            <strong id="totalTrades">0</strong>
+          </article>
+          <article class="metric-card accent-green">
+            <span>Win rate</span>
+            <strong id="winRate">0%</strong>
+          </article>
+          <article class="metric-card accent-purple">
+            <span>Profit factor</span>
+            <strong id="profitFactor">0.00</strong>
+          </article>
+          <article class="metric-card accent-gold">
+            <span>Average trade</span>
+            <strong id="avgTrade">0.00%</strong>
+          </article>
+        </section>
+
+        <section class="panel analysis-panel">
+          <div class="section-title-row">
+            <h2>Probability breakdown</h2>
+            <button id="runSimulationBtn" class="secondary-btn">Run Monte Carlo</button>
+          </div>
+
+          <div class="probability-list">
+            <div class="probability-item">
+              <label>Chance of profit</label>
+              <div class="bar-track">
+                <div id="chanceOfProfitBar" class="bar fill-green"></div>
+              </div>
+              <strong id="chanceOfProfitValue">0%</strong>
+            </div>
+
+            <div class="probability-item">
+              <label>Chance of hitting target</label>
+              <div class="bar-track">
+                <div id="chanceOfTargetBar" class="bar fill-blue"></div>
+              </div>
+              <strong id="chanceOfTargetValue">0%</strong>
+            </div>
+
+            <div class="probability-item">
+              <label>Chance of stop loss</label>
+              <div class="bar-track">
+                <div id="chanceOfLossBar" class="bar fill-red"></div>
+              </div>
+              <strong id="chanceOfLossValue">0%</strong>
+            </div>
+
+            <div class="probability-item">
+              <label>Chance of positive series</label>
+              <div class="bar-track">
+                <div id="chanceOfPositiveSeriesBar" class="bar fill-purple"></div>
+              </div>
+              <strong id="chanceOfPositiveSeriesValue">0%</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel forecast-panel">
+          <h2>Monte Carlo forecast</h2>
+          <div class="forecast-grid">
+            <div>
+              <span>Expected final equity</span>
+              <strong id="expectedEquityValue">$0.00</strong>
+            </div>
+            <div>
+              <span>Probability of positive ending</span>
+              <strong id="probabilityPositiveOutcome">0%</strong>
+            </div>
+            <div>
+              <span>Best-case scenario</span>
+              <strong id="bestCaseValue">$0.00</strong>
+            </div>
+            <div>
+              <span>Worst-case scenario</span>
+              <strong id="worstCaseValue">$0.00</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <h2>Trade history</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Symbol</th>
+                  <th>Side</th>
+                  <th>Return</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="tradeTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
